@@ -10,8 +10,10 @@ resource "kubernetes_namespace_v1" "this" {
 }
 
 # https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx
+# https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli
+# https://learn.microsoft.com/en-us/azure/aks/ingress-tls?tabs=azure-cli#use-a-static-public-ip-address
 
-resource "helm_release" "nginx_ingress" {
+resource "helm_release" "this" {
   namespace  = local.namespace
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
@@ -24,6 +26,12 @@ resource "helm_release" "nginx_ingress" {
         default: "${var.is_default}"
       service:
         loadBalancerIP: ${coalesce(var.load_balancer_ip, "null")}
+
+        %{~ if var.platform == "azure" ~}
+        annotations:
+          service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: /healthz
+        %{~ endif ~}
+
     EOF
   ], var.chart_values)
 
