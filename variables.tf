@@ -36,3 +36,9 @@ variable "is_default" {
   description = "Configure as the default Kubernetes ingress class."
   default     = true
 }
+
+variable "load_balancer_ip" {
+  type        = string
+  description = "Used by cloud providers to connect the resulting `LoadBalancer` to a pre-existing static IP according to https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer ."
+  default     = null
+}

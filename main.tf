@@ -22,6 +22,8 @@ resource "helm_release" "nginx_ingress" {
     controller:
       ingressClassResource:
         default: "${var.is_default}"
+      service:
+        loadBalancerIP: ${coalesce(var.load_balancer_ip, "null")}
     EOF
   ], var.chart_values)
 
