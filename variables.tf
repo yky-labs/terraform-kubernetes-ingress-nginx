@@ -9,8 +9,7 @@ variable "name" {
 
 variable "namespace" {
   type        = string
-  description = "Kubernetes namespace name."
-  default     = "kube-system"
+  description = "Kubernetes namespace."
 }
 
 variable "create_namespace" {
@@ -22,7 +21,7 @@ variable "create_namespace" {
 variable "chart_version" {
   type        = string
   description = "Helm Chart version."
-  default     = "4.4.2"
+  default     = null
 }
 
 variable "chart_values" {
