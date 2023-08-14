@@ -8,6 +8,7 @@ variable "platform" {
     condition     = contains(["generic", "azure"], var.platform)
     error_message = "Unknown platform."
   }
+  description = "The platform to deploy to."
 }
 
 variable "name" {
